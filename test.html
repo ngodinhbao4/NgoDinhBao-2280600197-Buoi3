@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Sắp xếp & Phân trang</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f9f9f9; }
+        h1 { text-align: center; color: #333; }
+
+        /* THANH CÔNG CỤ */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .search-box input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .sort-box select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        /* --- BẢNG DỮ LIỆU (CHỈNH SỬA MÀU TẠI ĐÂY) --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #ddd; }
+        
+        /* Header màu xanh */
+        th { background-color: #009879; color: #ffffff; cursor: pointer; }
+
+        /* Dòng Lẻ: Màu Trắng - Chữ Đen */
+        tbody tr:nth-child(odd) { 
+            background-color: #ffffff; 
+            color: #000000; 
+        }
+        
+        /* Dòng Chẵn: Màu Đen - Chữ Trắng */
+        tbody tr:nth-child(even) { 
+            background-color: #1a1a1a; /* Màu đen dịu */
+            color: #ffffff; 
+        }
+
+        /* Ảnh sản phẩm */
+        .product-img {
+            width: 60px; height: 60px;
+            object-fit: contain;
+            border-radius: 4px;
+            border: 1px solid #eee;
+            background: #fff; /* Nền trắng cho ảnh để nổi trên nền đen */
+        }
+
+        /* Giá tiền: Màu cam sáng để nổi bật trên cả nền đen và trắng */
+        .price-tag { font-weight: bold; color: #ff5722; }
+
+        /* --- FOOTER PHÂN TRANG --- */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .page-controls button {
+            padding: 8px 15px;
+            background-color: #009879;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .page-controls button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Quản lý Sản phẩm</h1>
+
+    <div class="toolbar">
+        <div class="sort-box">
+            <label>Sắp xếp: </label>
+            <select id="sort-select">
+                <option value="default">Mặc định (ID)</option>
+                <option value="price-asc">Giá: Thấp đến Cao</option>
+                <option value="price-desc">Giá: Cao đến Thấp</option>
+                <option value="name-asc">Tên: A - Z</option>
+                <option value="name-desc">Tên: Z - A</option>
+            </select>
+        </div>
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="🔍 Tìm kiếm sản phẩm...">
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Danh mục</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            </tbody>
+    </table>
+
+    <div class="pagination-container">
+        <div class="rows-per-page">
+            Hiển thị:
+            <select id="rows-per-page">
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+            </select>
+        </div>
+        <div class="page-controls">
+            <button id="prev-btn">Trước</button>
+            <span id="page-info">Trang 1 / 1</span>
+            <button id="next-btn">Sau</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html> 
